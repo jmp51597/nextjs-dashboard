@@ -13,13 +13,18 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from '@/app/ui/button';
 import { authenticate } from '@/app/lib/actions';
 
+const DEMO_EMAIL = 'user@nextmail.com';
+const DEMO_PASSWORD = '123456';
+
 export default function LoginForm() {
   const [errorMessage, dispatch] = useActionState(authenticate, undefined);
 
   return (
-    <form action={dispatch} className="space-y-3">
+    <div className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className="mb-3 text-2xl">Please log in to continue.</h1>
+
+        <form action={dispatch}>
 
         <div className="w-full">
           <div>
@@ -69,6 +74,22 @@ export default function LoginForm() {
         </div>
 
         <LoginButton />
+        </form>
+
+        <div className="my-4 flex items-center gap-3 text-xs text-gray-500">
+          <div className="h-px flex-1 bg-gray-200" />
+          or
+          <div className="h-px flex-1 bg-gray-200" />
+        </div>
+
+        <form action={dispatch}>
+          <input type="hidden" name="email" value={DEMO_EMAIL} />
+          <input type="hidden" name="password" value={DEMO_PASSWORD} />
+          <DemoButton />
+        </form>
+        <p className="mt-2 text-center text-xs text-gray-500">
+          Demo login: {DEMO_EMAIL} / {DEMO_PASSWORD}
+        </p>
 
         <div
           className="flex h-8 items-end space-x-1"
@@ -83,7 +104,7 @@ export default function LoginForm() {
           )}
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 
@@ -95,5 +116,20 @@ function LoginButton() {
       Log in
       <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
+  );
+}
+
+function DemoButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      aria-disabled={pending}
+      className="flex h-10 w-full items-center rounded-lg border border-blue-500 bg-white px-4 text-sm font-medium text-blue-500 transition-colors hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-100 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+    >
+      {pending ? 'Signing in…' : 'Try the demo'}
+      <ArrowRightIcon className="ml-auto h-5 w-5 text-blue-500" />
+    </button>
   );
 }
