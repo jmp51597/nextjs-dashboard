@@ -1,7 +1,7 @@
 
         import { neon, neonConfig } from '@neondatabase/serverless';
 
-        const sql = neon(process.env.DATABASE_URL);
+        const sql = neon(process.env.DATABASE_URL || process.env.POSTGRES_PASSWORD_DATABASE_URL);
 
         import { formatCurrency } from './utils';
 

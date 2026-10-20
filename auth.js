@@ -6,7 +6,7 @@ import { neon } from '@neondatabase/serverless';
 import bcrypt from 'bcrypt';
 async function getUser(email) {
   try {
-    const sql = neon(`${process.env.DATABASE_URL}`);
+    const sql = neon(process.env.DATABASE_URL || process.env.POSTGRES_PASSWORD_DATABASE_URL);
     const user = await sql`SELECT * FROM users WHERE email=${email}`;
     return user[0];
   } catch (error) {
